@@ -11,4 +11,9 @@ describe("UserService", () => {
 
         expect(mockConsole).toHaveBeenCalledWith("DB atualizado:", mockDb)
     })
+
+    it("Deve retornar um array contendo a lista de usuários", () => {
+        const users = userService.getAllUsers()
+        expect(users).toMatchObject(mockDb)
+    })
 })

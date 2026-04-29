@@ -13,13 +13,7 @@ export class UserController {
 
         if (!user.name) {
             return response.status(400).json({
-                message: "Bad request: name is required"
-            })
-        }
-
-        if (!user.email) {
-            return response.status(400).json({
-                message: "Bad request: email is required"
+                message: "Bad request: nome é obrigatório"
             })
         }
 
