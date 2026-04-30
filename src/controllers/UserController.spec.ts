@@ -60,6 +60,37 @@ describe("UserController", () => {
         })
     })
 
+    it("Deve retornar um erro caso o e-mail não seja fornecido", () => {
+        const mockRequest = {
+            body: {
+                name: "Giulliano"
+            }
+        } as Request
+
+        const response = userController.createUser(mockRequest, mockResponse)
+
+        expect(mockResponse.state.status).toBe(400)
+        expect(mockResponse.state.json).toMatchObject({
+            message: "Bad request: e-mail é obrigatório"
+        })
+    })
+
+    it("Deve retornar um erro caso o campo e-mail esteja vazio", () => {
+        const mockRequest = {
+            body: {
+                name: "Giulliano",
+                email: ""
+            }
+        } as Request
+
+        const response = userController.createUser(mockRequest, mockResponse)
+
+        expect(mockResponse.state.status).toBe(400)
+        expect(mockResponse.state.json).toMatchObject({
+            message: "Bad request: e-mail é obrigatório"
+        })
+    })
+
     it("Deve retornar um array contendo a lista de usuários", () => {
         const response = userController.getAllUsers({} as Request, mockResponse)
 
