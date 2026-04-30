@@ -30,6 +30,6 @@ Este é o quarto desafio da Formação TypeScript Fullstack Developer da DIO, mi
   - O usuário nâo pode ser criado caso não informe o email
   - Escreva o teste unitário
 
-- [ ] Refatorar e implementar a rota para deletar o usuário
+- [x] Refatorar e implementar a rota para deletar o usuário
   - Refatore a rota para deletar usuários
   - Escreva os testes unitários necessários
