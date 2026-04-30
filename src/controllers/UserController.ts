@@ -34,4 +34,20 @@ export class UserController {
         const users = this.userService.getAllUsers()
         return response.status(200).json(users)
     }
+
+    deleteUser = (request: Request, response: Response) => {
+        const { body: user } = request
+
+        if (this.userService.db.every(data => data.email !== user.email)) {
+            return response.status(404).json({
+                message: "Usuário não encontrado"
+            })
+        }
+
+        this.userService.deleteUser(user.email)
+
+        return response.status(200).json({
+            message: "Usuário deletado"
+        })
+    }
 }

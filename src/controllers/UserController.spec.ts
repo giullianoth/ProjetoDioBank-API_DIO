@@ -8,6 +8,13 @@ describe("UserController", () => {
     const mockUserService: Partial<UserService> = {
         createUser: jest.fn(),
         getAllUsers: () => [] as User[],
+        deleteUser: jest.fn(),
+        db: [
+            {
+                name: "Giulliano",
+                email: "giulliano@teste.com"
+            }
+        ]
     }
 
     const mockDb: User[] = []
@@ -96,5 +103,37 @@ describe("UserController", () => {
 
         expect(mockResponse.state.status).toBe(200)
         expect(mockResponse.state.json).toMatchObject(mockDb)
+    })
+
+    it("Deve deletar um usuário", () => {
+        const mockRequest = {
+            body: {
+                name: "Giulliano",
+                email: "giulliano@teste.com"
+            }
+        } as Request
+
+        const response = userController.deleteUser(mockRequest, mockResponse)
+
+        expect(mockResponse.state.status).toBe(200)
+        expect(mockResponse.state.json).toMatchObject({
+            message: "Usuário deletado"
+        })
+    })
+
+    it("Deve retornar um erro quando o usuário não for encontrado", () => {
+        const mockRequest = {
+            body: {
+                name: "Giulliano",
+                email: "giulliano@teste2.com"
+            }
+        } as Request
+
+        const response = userController.deleteUser(mockRequest, mockResponse)
+
+        expect(mockResponse.state.status).toBe(404)
+        expect(mockResponse.state.json).toMatchObject({
+            message: "Usuário não encontrado"
+        })
     })
 })
