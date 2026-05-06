@@ -8,7 +8,7 @@ export class UserController {
         this.userService = userService
     }
 
-    createUser = (request: Request, response: Response) => {
+    createUser = async (request: Request, response: Response) => {
         const { body: user } = request
 
         if (!user.name) {
@@ -23,31 +23,36 @@ export class UserController {
             })
         }
 
-        this.userService.createUser(user.name, user.email)
+        if (!user.password) {
+            return response.status(400).json({
+                message: "Bad request: senha é obrigatória"
+            })
+        }
+
+        await this.userService.createUser(user.name, user.email, user.password)
 
         return response.status(201).json({
             message: "Usuário criado"
         })
     }
 
-    getAllUsers = (request: Request, response: Response) => {
-        const users = this.userService.getAllUsers()
-        return response.status(200).json(users)
+    getUser = (request: Request, response: Response) => {
+        return response.status(200)
     }
 
-    deleteUser = (request: Request, response: Response) => {
-        const { body: user } = request
+    // deleteUser = (request: Request, response: Response) => {
+    //     const { body: user } = request
 
-        if (this.userService.db.every(data => data.email !== user.email)) {
-            return response.status(404).json({
-                message: "Usuário não encontrado"
-            })
-        }
+    //     if (this.userService.db.every(data => data.email !== user.email)) {
+    //         return response.status(404).json({
+    //             message: "Usuário não encontrado"
+    //         })
+    //     }
 
-        this.userService.deleteUser(user.email)
+    //     this.userService.deleteUser(user.email)
 
-        return response.status(200).json({
-            message: "Usuário deletado"
-        })
-    }
+    //     return response.status(200).json({
+    //         message: "Usuário deletado"
+    //     })
+    // }
 }

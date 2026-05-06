@@ -8,7 +8,11 @@
     "build": "rimraf ./build && tsc",
     "start": "node ./build/src/index.js",
     "dev": "tsx watch src/index.ts",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:create": "npm run typeorm migration:create -n",
+    "migration:run": "npx typeorm-ts-node-commonjs migration:run -d src/database/index.ts",
+    "migration:revert": "npx typeorm-ts-node-commonjs migration:revert -d src/database/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -18,10 +22,14 @@
     "@types/jest": "^30.0.0",
     "jest": "^30.3.0",
     "ts-jest": "^29.4.9",
+    "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "reflect-metadata": "^0.2.2",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.28"
   }
 }
